@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package opencandle;
+
+option go_package = "github.com/matchstick-trading/opencandle/proto";
+
+// OpenCandle V1 - The open schema for modern algorithmic trading
+// Works for Time bars, Tick bars, and Volume bars
+//
+// Tagline: Write Once. Trade Everywhere.
+//
+// The `~bar` property pattern provides a consistent interface across
+// all storage formats (array, object, protobuf) while maintaining
+// strict type safety.
+message Candle {
+  // Version identifier - always 1 for V1 schema
+  int32 version = 1;
+
+  // Vendor/source identifier (e.g., "binance", "kraken", "coinbase")
+  string vendor = 2;
+
+  // OHLCV data
+  int64 timestamp = 3;   // Unix milliseconds (bar/candle start time)
+  double open = 4;       // Opening price
+  double high = 5;       // Highest price during interval
+  double low = 6;        // Lowest price during interval
+  double close = 7;      // Closing price
+  double volume = 8;     // Trading volume
+
+  // Extensible metadata for custom fields
+  // Examples: funding_rate, spread, ml_signal, etc.
+  map<string, bytes> meta = 9;
+}
+
+// Collection of candles for batch operations
+message CandleFeed {
+  // Array of candles in chronological order
+  repeated Candle candles = 1;
+
+  // Optional metadata about the feed
+  string symbol = 2;           // Trading pair (e.g., "BTC/USD")
+  string interval = 3;         // Interval type (e.g., "1m", "100tick", "1000vol")
+  int64 start_time = 4;        // First candle timestamp
+  int64 end_time = 5;          // Last candle timestamp
+}
+
+// Request message for streaming candles
+message CandleRequest {
+  string symbol = 1;           // Trading pair to subscribe
+  string interval = 2;         // Desired interval
+  int64 from_timestamp = 3;    // Start time (0 for live stream)
+  int64 to_timestamp = 4;      // End time (0 for live stream)
+}
+
+// Service definition for candle streaming
+service CandleService {
+  // Get historical candles
+  rpc GetCandles(CandleRequest) returns (CandleFeed);
+
+  // Stream live candles
+  rpc StreamCandles(CandleRequest) returns (stream Candle);
+}

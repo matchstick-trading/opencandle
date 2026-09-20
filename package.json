@@ -1,0 +1,32 @@
+{
+  "name": "@matchstick-trading/opencandle",
+  "version": "0.1.0",
+  "description": "Open schema for OHLCV market data with extensible metadata",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "proto"],
+  "scripts": {
+    "build": "tsc",
+    "test": "node --import tsx --test src/**/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["opencandle", "ohlcv", "market-data", "trading", "candle", "schema"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matchstick-trading/opencandle"
+  },
+  "engines": { "node": ">=22" },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}
