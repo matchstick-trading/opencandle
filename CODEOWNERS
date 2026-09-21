@@ -1,0 +1,7 @@
+# Require review from @watthem for security- and governance-sensitive paths.
+/.github/            @watthem
+/AGENTS.md           @watthem
+/SECURITY.md         @watthem
+/package.json        @watthem
+/package-lock.json   @watthem
+.github/CODEOWNERS   @watthem
