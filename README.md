@@ -1,6 +1,6 @@
 # OpenCandle
 
-Open schema for OHLCV (candlestick) market data with extensible metadata. Write Once. Trade Everywhere.
+Open schema for OHLCV (candlestick) market data with extensible metadata.
 
 The `meta` field on each candle lets tools attach per-bar facts -- signals, labels, indicators, classifications -- without modifying the core schema.
 
